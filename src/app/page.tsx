@@ -24,8 +24,6 @@ export default function ChatPage() {
     wsRef.current.onclose = () => console.log("Conexão fechada");
     wsRef.current.onmessage = processMessage
 
-    console.log("state", wsRef.current.readyState, WebSocket.OPEN)
-
     // cleanup: fecha a conexão ao desmontar o componente
     return () => {
       wsRef.current?.close();
@@ -36,11 +34,13 @@ export default function ChatPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  function processMessage(event: { data: string }) {
+  async function processMessage(event: { data: Blob }) {
     console.log("event", event)
     const { data } = event;
     console.log("data", data)
-    const { userId, from, text } = JSON.parse(data)
+    const payload = await data.text();
+    console.log("payload", payload)
+    const { userId, from, text } = JSON.parse(payload)
 
     const newMessage = { userId, from, text }
 
@@ -94,10 +94,10 @@ export default function ChatPage() {
         user.id ?
           <>
             <section className="flex-1 overflow-auto p-4">
-              <div className="max-w-2xl mx-auto space-y-3">
-                {messages.map((m) => (
+              <div className="w-[100%] min-h-[100%] max-w-2xl mx-auto space-y-3 flex flex-col justify-end">
+                {messages.map((m, index) => (
                   <div
-                    key={m.userId}
+                    key={index}
                     className={`flex ${m.userId === user.id ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
@@ -123,11 +123,11 @@ export default function ChatPage() {
                   onChange={(e) => setText(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Digite uma mensagem..."
-                  className="flex-1 min-h-[44px] max-h-44 resize-none border rounded-md px-3 py-2 bg-gray-900 text-white focus:outline-none focus:ring focus:ring-green-500"
+                  className="flex-1 h-[54px] resize-none border rounded-md px-3 py-2 bg-gray-900 text-white focus:outline-none focus:ring focus:ring-green-500"
                 />
                 <button
                   onClick={sendMessage}
-                  className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-500"
+                  className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-500 h-[54px]"
                 >
                   Enviar
                 </button>
