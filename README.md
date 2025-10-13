@@ -22,7 +22,6 @@ Caso você queira ver o projeto em execução de forma mais rápida e facíl ace
 
 - **Node.js** – A partir da versão 22.
 - **npm** – A partir da versão 10.
-- **docker compose** - A partir da versão 2.39.
 
 ---
 
