@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
   const version = process.version;
 
   try {
-    const response = await fetch("http://localhost:3000");
+    const response = await fetch(process.env.NODE_ENV == "development" ? "http://localhost:3000": "https://chat.maycon.dev.br/");
     if (response.status === 200) {
       status = "online";
     }
