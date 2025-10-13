@@ -42,13 +42,19 @@ git clone https://github.com/Maycon40/chat-tempo-real.git
 cd chat-tempo-real
 ```
 
-### 2️⃣ Instalar as dependências
+### 2️⃣ Copiar a variável de ambiente
+
+```bash
+cp env.example .env
+```
+
+### 3️⃣ Instalar as dependências
 
 ```bash
 npm i
 ```
 
-### 3️⃣ Subir o servidor web
+### 4️⃣ Subir o servidor web
 
 ```bash
 npm run dev
